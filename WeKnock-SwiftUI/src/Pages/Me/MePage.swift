@@ -8,7 +8,13 @@
 
 import SwiftUI
 
+class MeModel: ObservableObject {
+    
+}
+
 struct MePage: View {
+    
+    @ObservedObject var model = MeModel()
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -16,11 +22,15 @@ struct MePage: View {
                 Spacer(minLength: 30)
                 InfoCard().padding(.bottom, 20)
                 MePageRow(title: "Shop", icon: "shop")
+                MePageRow(title: "Ticket", icon: "tick")
                 MePageRow(title: "Member", icon: "diamond")
                 MePageRow(title: "Collection", icon: "like")
             }
-        }
+        }.navigationBarItems(trailing: NavigationLink(destination: HomePage(), label: {
+            Image("setting").renderingMode(.original)
+        }))
     }
+
 }
 
 struct InfoCard: View {
@@ -62,11 +72,11 @@ struct MePageRow: View {
                 .frame(width: UIScreen.main.bounds.width * 0.85, height: 64, alignment: .topLeading)
                 .cornerRadius(20, antialiased: true)
                 .opacity(0.3)
-            HStack(spacing: 170) {
-                HStack(spacing: 25) {
+            HStack(spacing: 100) {
+                HStack() {
                     Image("\(self.icon ?? "")").resizable().frame(width: 35, height: 35)
                     Text(self.title ?? "").bold().foregroundColor(.gray)
-                }
+                }.frame(width: 150, alignment: .leading)
                 Image("arrow").resizable().frame(width: 25, height: 25)
             }
         }.onTapGesture {
@@ -89,7 +99,7 @@ struct ProgressBar: View {
                     .foregroundColor(.white)
                 Rectangle().frame(width: (geometry.size.width * CGFloat(self.value)), height: geometry.size.height)
                     .foregroundColor(Color(.white))
-                    .animation(.linear)
+                    .animation(.spring())
             }.cornerRadius(10)
         }
     }
