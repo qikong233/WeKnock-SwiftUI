@@ -15,7 +15,9 @@ struct MePage: View {
             VStack {
                 Spacer(minLength: 30)
                 InfoCard().padding(.bottom, 20)
-                MePageRow()
+                MePageRow(title: "Shop", icon: "shop")
+                MePageRow(title: "Member", icon: "diamond")
+                MePageRow(title: "Collection", icon: "like")
             }
         }
     }
@@ -49,6 +51,10 @@ struct InfoCard: View {
 }
 
 struct MePageRow: View {
+    
+    var title: String?
+    var icon: String?
+    
     var body: some View {
         ZStack {
             Rectangle()
@@ -58,10 +64,10 @@ struct MePageRow: View {
                 .opacity(0.3)
             HStack(spacing: 170) {
                 HStack(spacing: 25) {
-                    Image("bag").resizable().frame(width: 35, height: 35)
-                    Text("item").bold().foregroundColor(.gray)
+                    Image("\(self.icon ?? "")").resizable().frame(width: 35, height: 35)
+                    Text(self.title ?? "").bold().foregroundColor(.gray)
                 }
-                Image("arrow").resizable().frame(width: 30, height: 30)
+                Image("arrow").resizable().frame(width: 25, height: 25)
             }
         }.onTapGesture {
             self.onTap()
